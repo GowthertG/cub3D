@@ -6,7 +6,7 @@
 /*   By: hhaddouc <hhaddouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:49:24 by hhaddouc          #+#    #+#             */
-/*   Updated: 2023/01/27 11:03:13 by hhaddouc         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:53:39 by hhaddouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ int main ()
   t_cub *cub;
   
   init_data(&cub);
+
+  int x = 0;
+  int y = 0;
+
   render(cub);
   mlx_loop(cub->mlx);
 }
