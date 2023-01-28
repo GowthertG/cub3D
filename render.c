@@ -33,6 +33,23 @@ void	put_pixel_to_image(t_cub *cub, int x, int y, t_data *img)
 		y++;
 	}
 }
+
+void render_player(t_data *img, t_cub *cub)
+{
+	int x_start = cub->player->x + TILE_SIZE / 4;
+	int y_start = cub->player->y + TILE_SIZE / 4;
+	while (y_start <= cub->player->y + TILE_SIZE / 1.5)
+	{
+		while (x_start <= cub->player->x + TILE_SIZE / 1.5)
+		{
+			my_mlx_pixel_put(img, x_start, y_start, 0x603601);
+			x_start++;
+		}
+		x_start = cub->player->x + TILE_SIZE / 4;
+		y_start++;
+	}
+}
+
 void	render(t_cub *cub)
 {
 	int		x;
@@ -54,17 +71,13 @@ void	render(t_cub *cub)
   {
     while (cub->map[y][x])
 	{
-		printf ("%d\n", y);
-       put_pixel_to_image(cub, x * 32, y * 32, img);
+  	  put_pixel_to_image(cub, x * 32, y * 32, img);
 	  x++;
-	  	// if (y == 10 && x == 15)
-		// break ;
 	}
-	// if (y == 10 && x == 15)
-	// 	break ;
 	x = 0;
     y++;
   }
+  render_player(img, cub);
   mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
 }
 
