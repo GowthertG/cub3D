@@ -3,7 +3,7 @@
 
 # include <unistd.h>
 # include <mlx.h>
-# include "../libft/libft.h"
+# include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 
