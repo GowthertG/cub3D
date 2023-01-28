@@ -42,7 +42,7 @@ void render_player(t_data *img, t_cub *cub)
 	while (y_start < (cub->player->y + TILE_SIZE / 2) + 2)
 	{
 		while (x_start < (cub->player->x + TILE_SIZE / 2) + 2)
-				my_mlx_pixel_put(img, x_start++, y_start, 0x361500);
+				my_mlx_pixel_put(img, x_start++, y_start, 0x9D5C0D);
 		x_start = (cub->player->x + TILE_SIZE / 2) - 2;
 		y_start++;
 	}	
