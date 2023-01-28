@@ -1,5 +1,6 @@
 #include "cub3d.h"
-
+#include "../libft/libft.h"
+#include <stdlib.h>
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;

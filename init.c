@@ -1,5 +1,5 @@
 #include "cub3d.h"
-
+#include <stdlib.h>
 void get_player_index(t_cub *cub)
 {
     cub->player->x = 0;
