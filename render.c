@@ -39,43 +39,46 @@ void render_player(t_data *img, t_cub *cub)
 	int x_start = (cub->player->x + TILE_SIZE / 2) - 2;
 	int y_start = (cub->player->y + TILE_SIZE / 2) - 2;
 
+
 	while (y_start < (cub->player->y + TILE_SIZE / 2) + 2)
 	{
 		while (x_start < (cub->player->x + TILE_SIZE / 2) + 2)
 				my_mlx_pixel_put(img, x_start++, y_start, 0x9D5C0D);
 		x_start = (cub->player->x + TILE_SIZE / 2) - 2;
 		y_start++;
-	}	
+	};
 }
 void	render(t_cub *cub)
 {
 	int		x;
 	int		y;
+	static int		count;
 	t_data	*img;
 
 	x = 0;
 	y = 0;
 	img = malloc (sizeof (t_data));
-	cub->win = mlx_new_window(cub->mlx, WINDOW_WIDTH , WINDOW_HEIGHT, "cub3d");
+	if (!count)
+	{
+		cub->win = mlx_new_window(cub->mlx, WINDOW_WIDTH , WINDOW_HEIGHT, "cub3d");
+		count++;
+	}
 	img->img = mlx_new_image(cub->mlx, MAP_NUM_ROWS * 32 , MAP_NUM_COLS * 32);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
 			&img->endian);
 
-	int i;
-
-	i = 0;
-  while (cub->map[y])
-  {
-    while (cub->map[y][x])
-	{
-  	  put_pixel_to_image(cub, x * 32, y * 32, img);
-	  x++;
-	}
-	x = 0;
-    y++;
-  }
-  render_player(img, cub);
-  mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
+  	while (cub->map[y])
+  	{
+ 	  	 while (cub->map[y][x])
+		{	
+ 	 	  put_pixel_to_image(cub, x * 32, y * 32, img);
+	 		 x++;
+		}
+		x = 0;
+ 	   y++;
+ 	}
+ 	render_player(img, cub);
+ 	mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
 }
 
 char ** get_map()

@@ -6,7 +6,7 @@
 /*   By: hhaddouc <hhaddouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:08:44 by hhaddouc          #+#    #+#             */
-/*   Updated: 2023/01/28 16:26:33 by hhaddouc         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:12:28 by hhaddouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
+# define UP		13
+# define DOWN	1
+# define RIGHT	0
+# define LEFT	2
+# define PLAYER_SPEED 2
+
 
 
 typedef struct s_list
@@ -57,6 +63,7 @@ char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_itoa(int n);
+
 /*******************************bonus_part**********************************/
 
 #endif

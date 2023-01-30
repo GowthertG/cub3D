@@ -1,11 +1,11 @@
 #ifndef CUB3D_H
-# define CUB3D_H
+                            # define CUB3D_H
 
-# include <unistd.h>
-# include <mlx.h>
-# include "libft.h"
-#include <unistd.h>
-#include <fcntl.h>
+            # include <unistd.h>
+        # include <mlx.h>
+        # include "libft.h"
+        #include <unistd.h>
+        #include <fcntl.h>
 
 #define	TILE_SIZE  32
 #define MAP_NUM_ROWS  15
@@ -28,11 +28,11 @@ typedef struct s_cub
 } t_cub;
 
 typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+    void	*img;
+    char	*addr;
+    int		bits_per_pixel;
+    int		line_length;
+    int		endian;
 }				t_data;
 
 // init cub struct
