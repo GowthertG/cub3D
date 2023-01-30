@@ -6,7 +6,7 @@
 /*   By: hhaddouc <hhaddouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 09:49:24 by hhaddouc          #+#    #+#             */
-/*   Updated: 2023/01/30 18:37:04 by hhaddouc         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:46:57 by hhaddouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int key_hook(int keycode, void *cb)
 {
   t_cub *cub = (t_cub *)cb;
+
 
   int x = (cub->player->y + 16);
   int y = (cub->player->x + 16);
