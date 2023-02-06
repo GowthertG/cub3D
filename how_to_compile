@@ -1,1 +1,0 @@
-cc -lmlx  -framework OpenGL -framework AppKit main.c libft.a render.c init.c

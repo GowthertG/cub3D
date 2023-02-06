@@ -6,7 +6,7 @@
 /*   By: hhaddouc <hhaddouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:08:44 by hhaddouc          #+#    #+#             */
-/*   Updated: 2023/01/30 18:12:28 by hhaddouc         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:38:56 by hhaddouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
-# define UP		13
-# define DOWN	1
-# define RIGHT	0
-# define LEFT	2
-# define PLAYER_SPEED 2
+
 
 
 

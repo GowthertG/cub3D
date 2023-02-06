@@ -1,41 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hhaddouc <hhaddouc@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 09:49:24 by hhaddouc          #+#    #+#             */
-/*   Updated: 2023/01/30 18:46:57 by hhaddouc         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "cub3d.h"
+#include "include/cub.h"
+#include <stdio.h>
 
 int key_hook(int keycode, void *cb)
 {
-  t_cub *cub = (t_cub *)cb;
+    printf("%d\n", keycode);
+    t_cub *cub = (t_cub *)cb;
+    if (keycode == UP)
+    {
+        cub->player->y = (cub->player->y  + (sin(cub->player->retation_angle++) * PLAYER_SPEED));
+        cub->player->x = (cub->player->x  + (cos(cub->player->retation_angle--) * PLAYER_SPEED));
+    }
+    render(cub);
 
+    return 0;
+}
 
-  int x = (cub->player->y + 16);
-  int y = (cub->player->x + 16);
-  if (keycode == DOWN &&  cub->map[((cub->player->y + 16 + PLAYER_SPEED) / 32)][(cub->player->x + 16) /32] != '1')
-    cub->player->y += PLAYER_SPEED;
-  else if (keycode == UP && cub->map[((cub->player->y + 16 - PLAYER_SPEED) / 32)][(cub->player->x + 16) /32] != '1')
-    cub->player->y -= PLAYER_SPEED;
-  else if (keycode == LEFT && cub->map[((cub->player->y + 16) / 32)][(cub->player->x + 16 + PLAYER_SPEED) /32] != '1')
-    cub->player->x += PLAYER_SPEED;
-  else if (keycode == RIGHT && cub->map[((cub->player->y + 16) / 32)][(cub->player->x + 16 - PLAYER_SPEED) /32] != '1')
-    cub->player->x -= PLAYER_SPEED;
-  render(cub);
+void    animation(t_cub *cub)
+{
+    mlx_hook(cub->mlx->mlx_win, 2, 0L, &key_hook, cub);
 }
 
 int main ()
 {
-  t_cub *cub;
-  
-  init_data(&cub);
-  render(cub);
-  mlx_hook(cub->win, 2, 0L, &key_hook, cub);
-  mlx_loop(cub->mlx);
+    t_cub *cub;
+
+    init_data(&cub);
+    render(cub);
+    animation(cub);
+    mlx_loop(cub->mlx->mlx);
+    return(0);
 }
