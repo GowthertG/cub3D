@@ -45,7 +45,12 @@ typedef struct s_mlx
 
 typedef struct s_data
 {
-	char **map;
+	char    **map;
+    int     x;
+    int     y;
+    int     sprite;
+    char    **textures;
+    char    **RGB;
 } t_data;
 
 typedef struct s_player
@@ -62,6 +67,7 @@ typedef struct s_cub
     t_data      *data;
     t_img       *img;
 }	t_cub;
+
 
 //utils
 void render(t_cub *cub);

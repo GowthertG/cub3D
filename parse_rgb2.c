@@ -2,7 +2,8 @@
 
 int ft_ctoi(char c)
 {
-    return (int(c) - 30);
+	int b = (int)c - 48;
+    return (b);
 }
 int check_rgb(t_cub *cub , int i)
 {
@@ -74,6 +75,9 @@ int parse_rgb(t_cub *cub)
     i = 0;
     while(cub->data->RGB[i])
     {
-
+		if(check_rgb(cub,i) == -1)
+			return (-1);
+		i++;
     }
+	return (1);
 }

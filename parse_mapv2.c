@@ -7,16 +7,16 @@ int valid_map(t_cub *cub)
     int j;
 
     i = 0;
-    while(i < cub->data.y)
+    while(i < cub->data->y)
     {
         j = 0;
-        while(j < cub->data.x)
+        while(j < cub->data->x)
         {
-            if(cub->data[i][j] != '1' && i == 0)
+            if(cub->data->map[i][j] != '1' && i == 0)
                 return (-1);
-            else if(cub->data[i][j] != '1' && i == cub->data.y - 1)
+            else if(cub->data->map[i][j] != '1' && i == cub->data->y - 1)
                 return(-1);
-            else if(cub->data[i][j] != '1' && i == cub->data.y - 1)
+            else if(cub->data->map[i][j] != '1' && i == cub->data->y - 1)
                 return(-1);
         }
     }
@@ -67,30 +67,116 @@ int ft_maplen(char **map)
     }
     return (i);
 }
+int check_block_lower(char **map)
+{
+	int	i;
+
+	if(ft_strlen(map[0]) > ft_strlen(map[1]))
+	{
+		i = fstrlen(map[1]);
+		if ((map[1][i - 1] || map[1][i - 1] != '1' ) && (map[1][i -2] || map[1][i - 2] != '1' ) && ( map[1][i -2] || map[1][i] != '1'))
+			return (-1);
+		return (1);
+	}
+	else
+	{
+		i = ftstrlen(map[0]);
+		if ((map[1][i - 1] || map[1][i - 1] != '1' ) && (map[1][i -2] || map[1][i - 2] != '1' ) && ( map[1][i -2] || map[1][i] != '1'))
+			return (-1);
+		return (1);
+	}
+	return (1);
+}
+
+int check_block_higher(char **map , int r)
+{
+	int	i;
+
+	if(ft_strlen(map[r]) > ft_strlen(map[r - 1]))
+	{
+		i = fstrlen(map[r - 1]) - 1;
+		if ((map[i - 1][r] || map[i - 1][r] != '1' ) && (map[i - 1][r - 1] || map[i - 1][r - 1] != '1' ) && ( map[i - 1][r + 1] || map[i - 1][r + 1] != '1'))
+			return (-1);
+		return (1);
+	}
+	else
+	{
+		i = ftstrlen(map[r]) - 1;
+		if ((map[i - 1][r] || map[i - 1][r] != '1' ) && (map[i - 1][r - 1] || map[i - 1][r - 1] != '1' ) && ( map[i - 1][r + 1] || map[i - 1][r + 1] != '1'))
+			return (-1);
+		return (1);
+	}
+	return (1);
+}
 int first_last_line(t_data *map)
 {
     int i;
     int j;
+	int begin_with_space;
 
+	i = ft_maplen(map->map);
     j = 0;
+	begin_with_space = 0;
+	while(map->map[0][j] && map->map[0][j] == ' ')
+	{
+		j++;
+		begin_with_space = 1;
+	}
     while(map->map[0][j])
     {
         if(map->map[0][j] == '1')
-            j++;
+        {
+			if((j == 0 && (map->map[1][j] != '1' && map->map[1][j + 1] != '1')) || (begin_with_space == 1 && (map->map[1][j] != '1' && map->map[1][j + 1] != '1' && map->map[1][j - 1] != '1')))
+				return (-1);
+			else if (ft_strlen(map->map[1]) < ft_strlen(map->map[0]) && j != 0)
+			{
+				if((j + 1) != ft_strlen(map->map[1]))
+					j++;
+			}
+			else if (ft_strlen(map->map[1]) >= ft_strlen(map->map[0]) && j != 0)
+			{
+				if((j + 1) != ft_strlen(map->map[0]))
+					j++;
+			}
+			else if(check_block_lower(map->map) == -1)
+				return (-1);
+		}
         else if(map->map[0][j] == ' ' && j + 1 != ft_strlen(map->map[0]))
             j++;
-        return (-1);
+        else
+			return (-1);
     }
-
+	begin_with_space = 0;
     i = ft_maplen(map->map) - 1;
     j = 0;
+	while(map->map[0][j] && map->map[0][j] == ' ')
+	{
+		j++;
+		begin_with_space = 1;
+	}
     while(map->map[i][j])
     {
         if(map->map[i][j] == '1')
-            j++;
+        {
+			if((j == 0 && (map->map[i - 1][j] != '1' && map->map[i - 1][j + 1] != '1')) || (begin_with_space == 1 && (map->map[i - 1][j] != '1' && map->map[i - 1][j + 1] != '1' && map->map[i - 1][j - 1] != '1')))
+				return (-1);
+			else if (ft_strlen(map->map[i]) < ft_strlen(map->map[i - 1]) && j != 0)
+			{
+				if((j + 1) != ft_strlen(map->map[i]))
+					j++;
+			}
+			else if (ft_strlen(map->map[i]) >= ft_strlen(map->map[i - 1]) && j != 0)
+			{
+				if((j + 1) != ft_strlen(map->map[i - 1]))
+					j++;
+			}
+			else if(check_block_higher(map->map,i) == -1)
+				return (-1);
+		}
         else if(map->map[i][j] == ' ' && j + 1 != ft_strlen(map->map[0]))
             j++;
-        return (-1);
+		else
+        	return (-1);
     }
     return (1);
 }
@@ -101,59 +187,38 @@ int check_return_line(t_data *map)
     i = 0;
     while(map->map[i])
     {
-        if(map[i][0] == '\n')
+        if(map->map[i][0] == '\n')
             return(0);
         i++;
     }
     return (1);
 }
-int surrounder_by_1(t_data *map,int x,int y)
-{
-    int i;
-    int bas;
-    int haut;
 
-    bas = 0;
-    haut = 0;
-    if(x == 0)
-    {
-        i = 0;
-        while(map->map[x][i])
-        {
-            if(map->map[x + 1][i] && map->map[x + 1][i] == '1')
-                return (1);
-            i++;
-        }
-    }
-    if(x + 1 != ft_maplen(map->map))
-    {
-        i = 0;
-        while(map->map[x][i])
-        {
-            if(map->map[x + 1][i] && map->map[x + 1][i] == '1')
-                bas = 1;
-            i++;
-        }
-        i = 0;
-        while(map->map[x][i])
-        {
-            if(map->map[x - 1][i] && map->map[x - 1][i] == '1')
-                haut = 1;
-            if(bas && haut)
-                return(1);
-            i++;
-        }
-    }
-    if( x + 1 != ft_maplen(map->map))
-    {
-        i = 0;
-        while(map->map[x][i])
-        {
-            if(map->map[x - 1][i] && map->map[x - 1][i] == '1')
-                return (1);
-            i++;
-        }
-    }
+int check_valid_0(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while(i < ft_maplen(map) - 1)
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(map[i][j] != ' ' || map[i][j] != '1')
+			{	
+				if(map[i][j + 1] == ' ' || map[i][j - 1] == ' '
+                    || map[i + 1][j] == ' ' || map[i - 1][j] == ' ')
+					return (-1);
+				else if((map[i][j + 1] == '\n' || map[i][j - 1] == '\n'
+                    || map[i + 1][j] == '\n' || map[i - 1][j] == '\n'))
+					return (-1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
 }
 int check_map(t_cub *cub)
 {
@@ -166,29 +231,13 @@ int check_map(t_cub *cub)
     int     j;
     char    s;
 
-    i = 0;
-    if(ft_maplen(cub->data->map) < 3)
+    i = 1;
+    if (ft_maplen(cub->data->map) < 3)
         return (-1);
+	if (check_return_line(cub->data) == 0)
+		return (-1);
     if(first_last_line(cub->data) == -1)
-        return (-1);
-    while(cub->data->map[i])
-    {
-        j = 0;
-        while(cub->data->map[i][j])
-        {
-            s = cub->data->map[i][j];
-            if(s != ' ' && s!= '1')
-            {
-                if(i == 0 || j == 0 || i + 1 == ft_maplen(cub->data->map) || j + 1 == ft_strlen(cub->data->map[i]) || cub->data->map[i][j + 1] == ' ' || cub->data->map[i][j - 1] == ' '
-                    || cub->data->map[i + 1][j] == ' ' || cub->data->map[i - 1][j] == ' ')
-                {
-                    write(1,"invalid map\n",12);
-                    return (-1);
-                }
-            }
-            if(s == ' ' && )
-            j++;
-        }
-        i++;
-    }
+    	return (-1);
+	if (check_valid_0(cub->data->map) == -1)
+		return (-1);
 }

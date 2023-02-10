@@ -8,13 +8,17 @@ int check_textures_part1(t_cub *cub, int *pos)
     int fd;
     char *temp;
 
-    if(cub->data->textures[*pos][0] == 'N' && cub->data->textures[*pos][1] == 'O')
+	while(cub->data->textures[*pos][0] == ' ')
+		j++;
+	if(check_correct_name(cub->data->textures,*pos,j) == -1)
+		return (-1);
+    if(cub->data->textures[*pos][j] == 'N' && cub->data->textures[*pos][j + 1] == 'O')
     {
         stop = 0;
         j = 2;
         if(!cub->data->textures[*pos][j])
             return (-1);
-        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] = ' ')
+        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] == ' ')
             j++;
         begin = j;
         while(cub->data->textures[*pos][j] && cub->data->textures[*pos][j] != ' ')
@@ -38,13 +42,13 @@ int check_textures_part1(t_cub *cub, int *pos)
             free(temp);
         }
     }
-    if(cub->data->textures[*pos][0] == 'S' && cub->data->textures[*pos][1] == 'O')
+    if(cub->data->textures[*pos][j] == 'S' && cub->data->textures[*pos][j + 1] == 'O')
     {
         stop = 0;
         j = 2;
         if(!cub->data->textures[*pos][j])
             return (-1);
-        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] = ' ')
+        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] == ' ')
             j++;
         begin = j;
         while(cub->data->textures[*pos][j] && cub->data->textures[*pos][j] != ' ')
@@ -70,6 +74,18 @@ int check_textures_part1(t_cub *cub, int *pos)
     }
     return(1);
 }
+int check_correct_name(char **textures, int *pos , int j)
+{
+	if(textures[*pos][j] == 'W' && textures[*pos][j + 1] == 'E')
+		return (1);
+	else if (textures[*pos][j] == 'S' && textures[*pos][j + 1] == 'O')
+		return (1);
+	else if (textures[*pos][j] == 'E' && textures[*pos][j + 1] == 'A')
+		return (1);
+	else if (textures[*pos][j] == 'N' && textures[*pos][j + 1] == 'O')
+		return (1);
+	return (-1);
+}
 int check_textures_part2(t_cub *cub, int *pos)
 {
     int j;
@@ -78,13 +94,18 @@ int check_textures_part2(t_cub *cub, int *pos)
     int fd;
     char *temp;
 
-    if(cub->data->textures[*pos][0] == 'W' && cub->data->textures[*pos][1] == 'E')
+	j = 0;
+	while(cub->data->textures[*pos][0] == ' ')
+		j++;
+	if(check_correct_name(cub->data->textures,*pos,j) == -1)
+		return (-1);
+    if(cub->data->textures[*pos][j] == 'W' && cub->data->textures[*pos][j + 1] == 'E')
     {
         stop = 0;
-        j = 2;
+        j += 2;
         if(!cub->data->textures[*pos][j])
             return (-1);
-        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] = ' ')
+        while(cub->data->textures[*pos][j] && cub->data->textures[*pos][j] == ' ')
             j++;
         begin = j;
         while(cub->data->textures[*pos][j] && cub->data->textures[*pos][j] != ' ')
@@ -108,13 +129,13 @@ int check_textures_part2(t_cub *cub, int *pos)
             free(temp);
         }
     }
-    if(cub->data->textures[*pos][0] == 'E' && cub->data->textures[*pos][1] == 'A')
+    if(cub->data->textures[*pos][j] == 'E' && cub->data->textures[*pos][j + 1] == 'A')
     {
         stop = 0;
         j = 2;
         if(!cub->data->textures[*pos][j])
             return (-1);
-        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] = ' ')
+        while(cub->data->textures[*pos][j] &&cub->data->textures[*pos][j] == ' ')
             j++;
         begin = j;
         while(cub->data->textures[*pos][j] && cub->data->textures[*pos][j] != ' ')
