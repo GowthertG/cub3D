@@ -48,7 +48,6 @@ typedef struct s_data
 	char    **map;
     int     x;
     int     y;
-    int     sprite;
     char    **textures;
     char    **RGB;
 } t_data;
@@ -57,7 +56,7 @@ typedef struct s_player
 {
     double	x;
     double	y;
-	double	retation_angle;
+	double	rotation_angle;
 }	t_player;
 
 typedef struct s_cub
