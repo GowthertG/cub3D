@@ -47,7 +47,7 @@ void render_map(t_cub *cub)
     }
 }
 
-void     get_player_index(t_cub *cub)
+void	get_player_index(t_cub *cub)
 {
     int x;
     int y;

@@ -1,43 +1,36 @@
 #include "include/cub.h"
 #include "get_next_line/get_next_line.h"
+
 int index_last(char **file)
 {
 	int	error;
 	int	i;
 
-	error = 0;
 	i = 0;
-	i = ft_researchstring(file,"NO") + 1;
 	error = i;
-	i = ft_researchstring(file + i, "SO");
-	if(i > error)
-	{
+	i = ft_researchstring(file,"NO",0) + 1;
+	if(error == i - 1)
+		i = i - 1;
+	error = i;
+	i = ft_researchstring(file, "SO",i) + 1;
+	if(error == i - 1)
+		i = i - 1;
 		error = i;
-		i = ft_researchstring(file + i,"EA") + 1;
-	}
-	else
-		i = ft_researchstring(file + i,"EA") + 1;
-	if(i > error)
-	{
+		i = ft_researchstring(file,"EA",i) + 1;
+	if(error ==i - 1)
+		i = i - 1;
 		error = i;
-		i = ft_researchstring(file + i,"WE") + 1 ;
-	}
-	else
-		i = ft_researchstring(file + i,"WE") + 1;
-	if(i > error)
-	{
+		i = ft_researchstring(file,"WE",i) + 1 ;
+	if(error == i - 1)
+		i = i - 1;
 		error = i;
-		i = ft_researchstring(file + i,"F") + 1;
-	}
-	else
-		i = ft_researchstring(file + i,"F") + 1;
-	if(i > error)
-	{
+		i = ft_researchstring(file,"F",i) + 1;
+	if(error == i - 1)
+		i = i - 1;
 		error = i;
-		i = ft_researchstring(file + i,"C") + 1;
-	}
-	else
-		i = ft_researchstring(file + i,"C") + 1;
+		i = ft_researchstring(file,"C",i) + 1;
+	if(error == i - 1)
+		i = i - 1;
 	return (i);
 
 }
@@ -46,9 +39,14 @@ int fill_map(char **file , t_cub *cub)
 	int	i;
 	int	len_map;
 	int	k;
+	int	j;
+	t_data *x;
 
+	x = (t_data *)malloc(sizeof(t_data));
 	k = 0;
 	i = index_last(file);
+	len_map = 2;
+	j = 0;
 	while(file[i])
 	{
 		j = 0;
@@ -59,15 +57,19 @@ int fill_map(char **file , t_cub *cub)
 		i++;
 	}
 	len_map = ft_maplen(file + i);
+
+	cub->data->x = 2;
+	// printf("%p", cub->data->x);
 	if(len_map == 0)
 		return (-1);
-	cub->data->map = (char **)malloc(sizeof(char *) * (len_map + 1));
-	while(file[i])
-	{
-		cub->data->map[k] = ft_strdup(file[i]);
-		i++;
-		k++;
-	}
+	//cub->data->map = (char **)malloc(sizeof(char *) * (len_map + 1));
+	// while(file[i])
+	// {
+	// 	cub->data->map[k] = ft_strdup(file[i]);
+	// 	i++;
+	// 	k++;
+	// }
+	return (1);
 }
 int is_all_textures_available(char **file)
 {
@@ -240,13 +242,13 @@ int duplicate_RGB(char **file)
 		return (-1);
 	return (1);
 }
-int ft_researchstring(char **files , char *s)
+int ft_researchstring(char **files , char *s , int position)
 {
 	int	i;
 	int j;
 	int	k;
 	
-	i = 0;
+	i = position;
 	while(files[i])
 	{
 		j = 0;
@@ -264,7 +266,7 @@ int ft_researchstring(char **files , char *s)
 		}
 		i++;
 	}
-	return (-1);
+	return (position);
 }
 int fill_textures(char **files, t_cub *cub)
 {
@@ -280,24 +282,24 @@ int fill_textures(char **files, t_cub *cub)
 		return (-1);
 	i = 0;
 	k = 0;
-	if(ft_researchstring(files + i,"SO") != -1)
+	if(ft_researchstring(files + i,"SO",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"SO")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"SO",0)]);
 		k += 1;
 	}
-	if(ft_researchstring(files + i,"NO") != -1)
+	if(ft_researchstring(files + i,"NO",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"NO")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"NO",0)]);
 		k += 1;
 	}
-	if(ft_researchstring(files + i,"EA") != -1)
+	if(ft_researchstring(files + i,"EA",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"EA")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"EA",0)]);
 		k += 1;
 	}
-	if(ft_researchstring(files + i,"WE") != -1)
+	if(ft_researchstring(files + i,"WE",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"WE")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"WE",0)]);
 		k += 1;
 	}
 	if(k == 4)
@@ -319,14 +321,14 @@ int fill_RGB(char **files , t_cub *cub)
 		return (-1);
 	i = 0;
 	k = 0;
-	if(ft_researchstring(files + i,"F") != -1)
+	if(ft_researchstring(files + i,"F",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"F")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"F",0)]);
 		k += 1;
 	}
-	if(ft_researchstring(files + i,"C") != -1)
+	if(ft_researchstring(files + i,"C",0) != -1)
 	{
-		cub->data->textures[k] = ft_strdup((const)files[ft_researchstring(files + i,"C")]);
+		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"C",0)]);
 		k += 1;
 	}
 	if(k == 2)

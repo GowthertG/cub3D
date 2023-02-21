@@ -1,6 +1,6 @@
-#include "../../include/cub.h"
+#include "include/cub.h"
 
-int check_arg(int argc,char **argv)
+int check_arguments_available(int argc,char **argv)
 {
     char *output;
     int  error;
@@ -15,7 +15,7 @@ int check_arg(int argc,char **argv)
     }
     else
     {
-        error = ft_strcmp(argv[1] + ft_strlen(argv[1]) - 4,".cub");
+        error = ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4,".cub",4);
         if(error != 0)
         {
             output = "Error : Wrong File\n";
@@ -24,9 +24,4 @@ int check_arg(int argc,char **argv)
         }      
     }
     return (1);
-}
-
-int allocate_map(int fd,char *buffer,t_cub *cub)
-{
-    
 }

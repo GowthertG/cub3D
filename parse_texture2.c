@@ -1,4 +1,4 @@
-#include "../../include/cub.h"
+#include "include/cub.h"
 
 int check_textures_part1(t_cub *cub, int *pos)
 {
@@ -8,9 +8,10 @@ int check_textures_part1(t_cub *cub, int *pos)
     int fd;
     char *temp;
 
+	j = 0;
 	while(cub->data->textures[*pos][0] == ' ')
 		j++;
-	if(check_correct_name(cub->data->textures,*pos,j) == -1)
+	if(check_correct_name(cub->data->textures,pos,j) == -1)
 		return (-1);
 	if(cub->data->textures[*pos][j] != ' ')
 		return (-1);
@@ -101,7 +102,7 @@ int check_textures_part2(t_cub *cub, int *pos)
 	j = 0;
 	while(cub->data->textures[*pos][0] == ' ')
 		j++;
-	if(check_correct_name(cub->data->textures,*pos,j) == -1)
+	if(check_correct_name(cub->data->textures,pos,j) == -1)
 		return (-1);
     if(cub->data->textures[*pos][j] == 'W' && cub->data->textures[*pos][j + 1] == 'E')
     {

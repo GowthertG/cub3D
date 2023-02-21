@@ -1,4 +1,4 @@
-#include "../../include/cub.h"
+#include "include/cub.h"
 
 
 int valid_map(t_cub *cub)
@@ -20,6 +20,19 @@ int valid_map(t_cub *cub)
                 return(-1);
         }
     }
+	return (1);
+}
+int check_position(char lettre)
+{
+	if(lettre == 'N')
+        return (1);
+    else if(lettre =='S')
+        return (1);
+    else if(lettre == 'E')
+        return (1);
+    else if(lettre == 'W')
+        return (1);
+    return (0);
 }
 int check_available_char(char lettre)
 {
@@ -56,9 +69,9 @@ int check_char_map(t_cub *cub)
     }
     return (-1);
 }
-int ft_maplen(char **map)
+size_t ft_maplen(char **map)
 {
-    int i;
+    size_t i;
 
     i = 0;
     while(map[i])
@@ -69,18 +82,18 @@ int ft_maplen(char **map)
 }
 int check_block_lower(char **map)
 {
-	int	i;
+	size_t	i;
 
 	if(ft_strlen(map[0]) > ft_strlen(map[1]))
 	{
-		i = fstrlen(map[1]);
+		i = ft_strlen(map[1]);
 		if ((map[1][i - 1] || map[1][i - 1] != '1' ) && (map[1][i -2] || map[1][i - 2] != '1' ) && ( map[1][i -2] || map[1][i] != '1'))
 			return (-1);
 		return (1);
 	}
 	else
 	{
-		i = ftstrlen(map[0]);
+		i = ft_strlen(map[0]);
 		if ((map[1][i - 1] || map[1][i - 1] != '1' ) && (map[1][i -2] || map[1][i - 2] != '1' ) && ( map[1][i -2] || map[1][i] != '1'))
 			return (-1);
 		return (1);
@@ -90,18 +103,18 @@ int check_block_lower(char **map)
 
 int check_block_higher(char **map , int r)
 {
-	int	i;
+	size_t	i;
 
 	if(ft_strlen(map[r]) > ft_strlen(map[r - 1]))
 	{
-		i = fstrlen(map[r - 1]) - 1;
+		i = ft_strlen(map[r - 1]) - 1;
 		if ((map[i - 1][r] || map[i - 1][r] != '1' ) && (map[i - 1][r - 1] || map[i - 1][r - 1] != '1' ) && ( map[i - 1][r + 1] || map[i - 1][r + 1] != '1'))
 			return (-1);
 		return (1);
 	}
 	else
 	{
-		i = ftstrlen(map[r]) - 1;
+		i = ft_strlen(map[r]) - 1;
 		if ((map[i - 1][r] || map[i - 1][r] != '1' ) && (map[i - 1][r - 1] || map[i - 1][r - 1] != '1' ) && ( map[i - 1][r + 1] || map[i - 1][r + 1] != '1'))
 			return (-1);
 		return (1);
@@ -110,8 +123,8 @@ int check_block_higher(char **map , int r)
 }
 int first_last_line(t_data *map)
 {
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 	int begin_with_space;
 
 	i = ft_maplen(map->map);
@@ -149,7 +162,7 @@ int first_last_line(t_data *map)
 	begin_with_space = 0;
     i = ft_maplen(map->map) - 1;
     j = 0;
-	while(map->map[0][j] && map->map[0][j] == ' ')
+	while(map->map[i][j] && map->map[i][j] == ' ')
 	{
 		j++;
 		begin_with_space = 1;
@@ -173,7 +186,7 @@ int first_last_line(t_data *map)
 			else if(check_block_higher(map->map,i) == -1)
 				return (-1);
 		}
-        else if(map->map[i][j] == ' ' && j + 1 != ft_strlen(map->map[0]))
+        else if(map->map[i][j] == ' ' && j + 1 != ft_strlen(map->map[i]))
             j++;
 		else
         	return (-1);
@@ -188,15 +201,18 @@ int check_return_line(t_data *map)
     while(map->map[i])
     {
         if(map->map[i][0] == '\n')
-            return(0);
+            return(-1);
         i++;
     }
+	i = ft_maplen(map->map) - 1;
+	if(map->map[i][0] == '\0')
+		return (-1);
     return (1);
 }
 
 int check_valid_0(char **map)
 {
-	int	i;
+	size_t	i;
 	int	j;
 
 	i = 1;
@@ -220,6 +236,53 @@ int check_valid_0(char **map)
 	}
 	return (1);
 }
+int check_duplicate(char **map)
+{
+	int	i;
+	int	j;
+	int	found;
+
+	i = 0;
+	found = 0;
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(check_position(map[i][j]) && found == 0)
+				found = 1;
+			else if(check_position(map[i][j]) && found)
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+int check_required_character(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if(check_position(map[i][j]))
+			{
+				if(check_duplicate(map))
+					return (-1);
+				else
+					break;
+			}
+			j++;
+		}
+		i++;
+	}
+	return(1);
+}
 int check_map(t_cub *cub)
 {
     if (check_char_map(cub) == -1)
@@ -228,16 +291,17 @@ int check_map(t_cub *cub)
         return (-1);
     }
     int     i;
-    int     j;
-    char    s;
 
     i = 1;
     if (ft_maplen(cub->data->map) < 3)
         return (-1);
-	if (check_return_line(cub->data) == 0)
+	if (check_return_line(cub->data) == -1)
 		return (-1);
     if(first_last_line(cub->data) == -1)
     	return (-1);
 	if (check_valid_0(cub->data->map) == -1)
 		return (-1);
+	if(check_required_character(cub->data->map) == -1)
+		return (-1);
+	return (1);
 }
