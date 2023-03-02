@@ -83,7 +83,7 @@ void	mlx_render_cmp(int x, int y, t_cub *cub);
 // Parsing
 int		check_arguments_available(int argc,char **argv);
 int		index_last(char **file);
-int 	fill_map(char **file , t_cub **cub);
+int 	fill_map(char **file , t_cub *cub);
 int 	is_all_textures_available(char **file);
 int 	is_all_rgb_available(char ** file);
 int 	is_duplicated(char **file , char *s);

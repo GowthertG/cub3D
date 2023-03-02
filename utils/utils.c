@@ -25,9 +25,7 @@ t_cub   *alloc(void)
     cub->player = (t_player *)malloc(sizeof(t_player));
 	if(cub->player == 0)
 		return (NULL);
-    cub->data = malloc(sizeof(t_data));
-	cub->data->x = 2;
-	printf("%d" , cub->data->x);
+    cub->data = (t_data *)malloc(sizeof(t_data));
 	if(cub->data == 0)
 		return (NULL);
     cub->img = (t_img *)malloc (sizeof(t_img));
@@ -87,18 +85,20 @@ int init_data(t_cub **cub, char *fl)
 	temp = get_next_line(fd);
 	while(temp)
 	{
-		file[i] = temp;
+		file[i] = ft_strdup(temp);
+		free(temp);
 		temp = get_next_line(fd);
 		i++;
 	}
 	file[i] = NULL;
 	close(fd);
   	*cub = alloc();
-	printf("cub%d----", (*cub)->data->x);
-	if(fill_map(file,*cub) == -1)
-		return (-1);
-	// if(fill_RGB(file,*cub) == -1)
+	// if(fill_map(file,*cub) == -1)
 	// 	return (-1);
+	// if(check_map(*cub) == -1)
+	// 	return (-1);
+	if(fill_RGB(file,*cub) == -1)
+		return (-1);
 	// if(fill_textures(file,*cub) == -1)
 	// 	return (-1);
 	// i = ft_maplen((*cub)->data->map);

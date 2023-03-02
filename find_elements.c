@@ -34,15 +34,16 @@ int index_last(char **file)
 	return (i);
 
 }
+
 int fill_map(char **file , t_cub *cub)
 {
-	int	i;
-	int	len_map;
-	int	k;
-	int	j;
-	t_data *x;
+	int		i;
+	int		len_map;
+	int		k;
+	int		j;
+	//char	**new_file;
 
-	x = (t_data *)malloc(sizeof(t_data));
+
 	k = 0;
 	i = index_last(file);
 	len_map = 2;
@@ -58,17 +59,17 @@ int fill_map(char **file , t_cub *cub)
 	}
 	len_map = ft_maplen(file + i);
 
-	cub->data->x = 2;
-	// printf("%p", cub->data->x);
 	if(len_map == 0)
 		return (-1);
-	//cub->data->map = (char **)malloc(sizeof(char *) * (len_map + 1));
-	// while(file[i])
-	// {
-	// 	cub->data->map[k] = ft_strdup(file[i]);
-	// 	i++;
-	// 	k++;
-	// }
+	cub->data->map = (char **)malloc(sizeof(char *) * (len_map + 1));
+	//new_file = new_file_matrix(file,0);
+	while(file[i])
+	{
+		cub->data->map[k] = ft_strdup(file[i]);
+		i++;
+		k++;
+	}
+	cub->data->map[k] = NULL;
 	return (1);
 }
 int is_all_textures_available(char **file)
@@ -316,21 +317,24 @@ int fill_RGB(char **files , t_cub *cub)
 	int	i;
 	int	k;
 
-	cub->data->RGB = (char **)malloc(sizeof(char *) * 2);
+	cub->data->RGB = (char **)malloc(sizeof(char *) * 3);
 	if(cub->data->textures == 0)
 		return (-1);
 	i = 0;
 	k = 0;
-	if(ft_researchstring(files + i,"F",0) != -1)
+	i = ft_researchstring(files,"F",0);
+	if(i != -1)
 	{
-		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"F",0)]);
+		cub->data->RGB[k] = ft_strdup(files[i]);
 		k += 1;
 	}
-	if(ft_researchstring(files + i,"C",0) != -1)
+	i = ft_researchstring(files,"C",0);
+	if(i != -1)
 	{
-		cub->data->textures[k] = ft_strdup(files[ft_researchstring(files + i,"C",0)]);
+		cub->data->RGB[k] = ft_strdup(files[i]);
 		k += 1;
 	}
+	cub->data->RGB[k] = NULL;
 	if(k == 2)
 		return (1);
 	return (-1);
